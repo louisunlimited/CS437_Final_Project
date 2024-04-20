@@ -3,20 +3,20 @@ import picamera2 as pic2
 import cv2
 
 app = Flask("FinalProject")
+camera = pic2.Picamera2()
+camera_config = camera.create_preview_configuration()
+camera.configure(camera_config)
+camera.start_preview(pic2.Preview.NULL)
+camera.start()
 
 def generate_frames():
-    with pic2.Picamera2() as picam2:
-        camera_config = picam2.create_preview_configuration()
-        picam2.configure(camera_config)
-        picam2.start_preview(pic2.Preview.NULL)
-        picam2.start()
-        while True:
-            buffer = picam2.capture_array()
-            buffer = cv2.cvtColor(buffer, cv2.COLOR_BGR2RGB)
-            _, buffer = cv2.imencode('.jpg', buffer)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+    while True:
+        buffer = camera.capture_array()
+        buffer = cv2.cvtColor(buffer, cv2.COLOR_BGR2RGB)
+        _, buffer = cv2.imencode('.jpg', buffer)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
            
 
 @app.route("/")
