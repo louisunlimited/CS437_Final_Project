@@ -1,12 +1,12 @@
 from flask import Flask, Response
-import picamera2 as pic2
+import picamera2
 import cv2
 
 app = Flask("FinalProject")
-camera = pic2.Picamera2()
+camera = picamera2.Picamera2()
 camera_config = camera.create_preview_configuration()
 camera.configure(camera_config)
-camera.start_preview(pic2.Preview.NULL)
+camera.start_preview(picamera2.Preview.NULL)
 camera.start()
 
 def generate_frames():
