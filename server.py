@@ -2,7 +2,7 @@ from flask import Flask, Response
 import picamera2
 import cv2
 
-app = Flask("FinalProject")
+app = Flask("123")
 camera = picamera2.Picamera2()
 camera_config = camera.create_preview_configuration()
 camera.configure(camera_config)
@@ -30,4 +30,4 @@ def video_feed():
     
 # host: inet address of the server (example: wlan0 -> inet)
 if __name__ == "__main__":
-    app.run(host="192.168.1.13", port=5000, debug=True, threaded=True)
+    app.run(host="192.168.1.13", port=5000, debug=False, Threaded=True)
