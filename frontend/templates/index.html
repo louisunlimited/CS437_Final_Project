@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raspberry Pi Camera Streams</title>
+  </head>
+  <body>
+    <h1>Raspberry Pi Camera Streams</h1>
+    {% for stream in streams %}
+    <div>
+      <h2>Camera {{ loop.index }}</h2>
+      <img src="{{ stream }}" style="width: 640px; height: 480px" />
+    </div>
+    {% endfor %}
+  </body>
+</html>
