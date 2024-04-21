@@ -28,13 +28,7 @@ def video_feed():
     return Response(generate_frames(),
                     mimetype="multipart/x-mixed-replace; boundary=frame")
     
-@app.teardown_appcontext
-def close_camera(e=None):
-    camera.stop()
-    camera.stop_preview()
-    camera.close()
-    print("Camera closed")
-    
+
 # host: inet address of the server (example: wlan0 -> inet)
 if __name__ == "__main__":
     app.run(host="192.168.1.13", port=5000, debug=False, threaded=True)
