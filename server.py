@@ -1,6 +1,10 @@
 from flask import Flask, Response
 import picamera2 as pic2
 import cv2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask("FinalProject")
 
@@ -40,4 +44,4 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
     
 if __name__ == "__main__":
-    app.run(host="192.168.1.13", port=5000, debug=False, threaded=True)
+    app.run(host=os.getenv("SERVER_HOST"), port=os.getenv("SERVER_PORT"), debug=False, threaded=True)
