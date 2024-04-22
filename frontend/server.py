@@ -4,13 +4,15 @@
 #(might do a react/ svelte / vue/ frontend just for fun)
 
 from flask import Flask, render_template
+import os
 
 app = Flask(__name__)
 
 # List of Raspberry Pi camera streams (IPs of your Raspberry Pis)
+raspi_ip_addr = os.getenv('RASPI_IP')
 streams = [
-    "http://192.168.1.13:5000/feed",
-    "http://192.168.1.13:5000/feed"
+    f"http://{raspi_ip_addr}:5000/feed",
+    f"http://{raspi_ip_addr}:5000/feed"
 ]
 
 @app.route('/')
