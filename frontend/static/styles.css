@@ -1,0 +1,27 @@
+.stream--panel {
+  border: 1px solid black;
+  margin: 30px;
+  padding: 10px;
+  padding-top: 0;
+}
+.stream--image {
+  width: 640px; 
+  height: 480px;
+}
+.horizontal-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.button-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.camera-switch-button {
+  height: 100px;
+  width: 200px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}

@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
     <title>Raspberry Pi Camera Streams</title>
   </head>
   <body>
     <h1>Raspberry Pi Camera Streams</h1>
     {% for stream in streams %}
-    <div>
+    <div class="stream--panel">
       <h2>Camera {{ loop.index }}</h2>
-      <img src="{{ stream }}" style="width: 640px; height: 480px" />
+      <div class="horizontal-flex">
+        <img src="{{ stream }}" class="stream--image" />
+        <div class="button-container">
+          <button class="camera-switch-button">Turn Off</button>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </body>
