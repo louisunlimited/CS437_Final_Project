@@ -1,7 +1,6 @@
 from flask import Flask, Response
 import picamera2 as pic2
 import cv2
-import numpy as np
 
 app = Flask("FinalProject")
 
