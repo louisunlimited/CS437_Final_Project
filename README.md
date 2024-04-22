@@ -21,3 +21,95 @@ File Structure:
 ├── README.md
 └── server.py   # Main Server that's ran on the Raspberry Pi
 ```
+
+## How to set up the project:
+
+Step 1: Clone the repo
+
+```
+cd ~
+mkdir finalproject
+cd finalproject
+git clone git@github.com:louisunlimited/CS437_Final_Project.git .
+```
+
+Make sure you have a `.env` file with the following values:
+
+```
+KAFKA_SERVER_URL=
+KAFKA_USERNAME=
+KAFKA_PASSWORD=
+SERVER_HOST=
+WEBHOOK_PORT=3000
+SERVER_PORT=5000
+```
+
+Step2 - Inf:
+
+```
+touch /etc/systemd/system/server.service
+```
+
+paste the following into `server.service`:
+CHANGE\ <USER\> and \<PWD\> accordingly.
+
+```
+[Unit]
+Description=Primary Flask Application
+After=network.target
+
+[Service]
+User=<USER>
+WorkingDirectory=<PWD>/finalproject
+ExecStart=/usr/bin/python <PWD>/server.py
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Run
+
+```
+systemctl enable server.service
+systemctl start server.service
+```
+
+Create another file
+
+```
+touch /etc/systemd/system/webhook.service
+```
+
+with the following
+
+```
+[Unit]
+Description=Primary Flask Application
+After=network.target
+
+[Service]
+User=<USER>
+WorkingDirectory=<PWD>/finalproject
+ExecStart=/usr/bin/python <PWD>/webhook.py
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+and run
+
+```
+systemctl enable server.service
+systemctl start server.service
+```
+
+Now you should be able to goto
+
+```
+<rasp-pi-IP>:5000/feed # for video feed
+<rasp-pi-IP>:3000/webhook # for webhook POST endpoints
+```
