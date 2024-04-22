@@ -12,7 +12,7 @@ consumer = KafkaConsumer(
     security_protocol='SASL_SSL',
     sasl_plain_username=os.getenv('KAFKA_USERNAME'),
     sasl_plain_password=os.getenv('KAFKA_PASSWORD'),
-    group_id='YOUR_CONSUMER_GROUP',
+    group_id='NOTIFICATION_GROUP',
     auto_offset_reset='earliest'
 )
 
