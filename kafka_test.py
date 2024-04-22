@@ -1,6 +1,7 @@
 from kafka import KafkaProducer
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 
 producer = KafkaProducer(
