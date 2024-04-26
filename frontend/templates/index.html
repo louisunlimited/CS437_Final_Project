@@ -9,10 +9,10 @@
   <body>
     <h1>Raspberry Pi Camera Streams</h1>
     {% for stream in streams %}
-    <div class="stream--panel">
+    <div class="stream-panel">
       <h2>Camera {{ loop.index }}</h2>
       <div class="horizontal-flex">
-        <img src="{{ stream }}" class="stream--image" />
+        <img src="{{ stream }}" class="stream-image" />
         <div class="button-container">
           <form method="post" action="/camera" >
             <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
