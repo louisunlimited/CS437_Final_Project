@@ -14,7 +14,14 @@
       <div class="horizontal-flex">
         <img src="{{ stream }}" class="stream--image" />
         <div class="button-container">
-          <button class="camera-switch-button">Turn Off</button>
+          <form method="post" action="/camera" >
+            <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
+            <button type="submit" class="camera-switch-button">{{ "Turn Off" if showCameras[loop.index - 1] else "Turn On" }}</button>
+          </form>
+          <form method="post" action="/reboot">
+            <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
+            <button type="submit" class="camera-switch-button">Reboot</button>
+          </form>
         </div>
       </div>
     </div>
