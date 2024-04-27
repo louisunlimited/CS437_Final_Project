@@ -47,7 +47,7 @@ def face_recognition_worker():
             name = "Unknown"
             if True in matches:
                 first_match_index = matches.index(True)
-                name = known_faces['names'][first_match_index]
+                name = "Louis"
 
             results.append((top, right, bottom, left, name))
         
