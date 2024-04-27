@@ -60,6 +60,7 @@ def generate_frames():
 
     while True:
         frame = camera.capture_array()
+        out_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_small = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
         frame_rgb = cv2.cvtColor(frame_small, cv2.COLOR_BGR2RGB)
         frame_queue.put(frame_rgb)
@@ -73,10 +74,10 @@ def generate_frames():
             right *= 2
             bottom *= 2
             left *= 2
-            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
-            cv2.putText(frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, (255, 255, 255), 1)
+            cv2.rectangle(out_frame, (left, top), (right, bottom), (0, 255, 0), 2)
+            cv2.putText(out_frame, name, (left + 6, bottom - 6), cv2.FONT_HERSHEY_DUPLEX, 0.5, (255, 255, 255), 1)
 
-        _, buffer = cv2.imencode('.jpg', frame)
+        _, buffer = cv2.imencode('.jpg', out_frame)
         frame_bytes = buffer.tobytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
