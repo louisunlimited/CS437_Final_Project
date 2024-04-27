@@ -7,6 +7,8 @@ import face_recognition
 from threading import Thread
 from queue import Queue
 import time
+from kafka import KafkaProducer
+from datetime import datetime, timedelta
 
 # Load environment variables
 import dotenv
@@ -30,7 +32,20 @@ camera.start()
 frame_queue = Queue()
 result_queue = Queue()
 
+producer = KafkaProducer(
+    bootstrap_servers=os.getenv('KAFKA_SERVER_URL'),
+    sasl_mechanism='SCRAM-SHA-256',
+    security_protocol='SASL_SSL',
+    sasl_plain_username=os.getenv('KAFKA_USERNAME'),
+    sasl_plain_password=os.getenv('KAFKA_PASSWORD')
+)
+
+
+
 def face_recognition_worker():
+    last_sent_time = datetime.now() - timedelta(seconds=5)  # Initialize to allow immediate first message
+    min_interval = timedelta(seconds=5)  # Minimum time between messages
+    
     while True:
         frame_rgb = frame_queue.get()
         if frame_rgb is None:
@@ -41,18 +56,28 @@ def face_recognition_worker():
         face_encodings = face_recognition.face_encodings(frame_rgb, face_locations)
 
         results = []
+        send_message = False  # Flag to determine whether to send a message
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
             # Check if the face is a match for known faces
             matches = face_recognition.compare_faces(known_faces['encodings'], face_encoding)
             name = "Unknown"
             if True in matches:
                 first_match_index = matches.index(True)
-                name = "Louis"
+                name = known_faces['names'][first_match_index]  # Assuming a names list in your pickle
 
             results.append((top, right, bottom, left, name))
-        
-        result_queue.put(results)
+            
+            # Check if we should send a message
+            if name == "Unknown":
+                if datetime.now() - last_sent_time > min_interval:
+                    send_message = True
 
+        if send_message:
+            producer.send('Test', value=f"Unknown face detected at {time.ctime()}".encode('utf-8'))
+            last_sent_time = datetime.now()  # Update the last sent time
+
+        result_queue.put(results)
+        
 def generate_frames():
     # Start the face recognition thread
     recognition_thread = Thread(target=face_recognition_worker)
