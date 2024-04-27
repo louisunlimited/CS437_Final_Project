@@ -16,10 +16,10 @@ def webhook():
     data = request.json  # Assuming JSON payload
     if 'command' in data:
         if data['command'] == 'start':
-            subprocess.run(['sudo', 'systemctl', 'start', 'server.service'])
+            subprocess.run(['sudo', 'systemctl', 'start', 'server'])
             return "Starting Flask application", 200
         elif data['command'] == 'stop':
-            subprocess.run(['sudo', 'systemctl', 'stop', 'server.service'])
+            res = subprocess.run(['sudo', 'systemctl', 'stop', 'server'],capture_output=True, text=True)
             return "Stopping Flask application", 200
         elif data['command'] == 'reboot':
             subprocess.run(['sudo', 'reboot'])
