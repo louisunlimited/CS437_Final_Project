@@ -1,8 +1,3 @@
-############################################
-# EXAMPLE FOR combining multiple streams ###
-############################################
-#(might do a react/ svelte / vue/ frontend just for fun)
-
 from flask import Flask, render_template, request, redirect, url_for
 import requests
 from dotenv import load_dotenv
@@ -10,7 +5,6 @@ import os
 
 app = Flask(__name__)
 
-# List of Raspberry Pi camera streams (IPs of your Raspberry Pis)
 load_dotenv()
 rasapi_addresses = os.getenv('IP_LIST').split(',')
 streams = [f'http://{raspi_ip_addr}:5000/feed' for raspi_ip_addr in rasapi_addresses]
