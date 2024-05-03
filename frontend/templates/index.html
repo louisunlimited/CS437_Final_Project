@@ -8,23 +8,28 @@
   </head>
   <body>
     <h1>Raspberry Pi Camera Streams</h1>
-    {% for stream in streams %}
-    <div class="stream-panel">
-      <h2>Camera {{ loop.index }}</h2>
-      <div class="horizontal-flex">
-        <img src="{{ stream }}" class="stream-image" />
-        <div class="button-container">
-          <form method="post" action="/camera" >
-            <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
-            <button type="submit" class="camera-switch-button">{{ "Turn Off" if showCameras[loop.index - 1] else "Turn On" }}</button>
-          </form>
-          <form method="post" action="/reboot">
-            <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
-            <button type="submit" class="camera-switch-button">Reboot</button>
-          </form>
+    <div class="panels-container">
+      {% for stream in streams %}
+      <div class="stream-panel">
+        <h2>Camera {{ loop.index }}</h2>
+        <div class="horizontal-flex">
+          <div class="image-container">
+            <!-- if statement -->
+            <img src="{{ stream }}" class="stream-image" alt="{{'Loading...' if showCameras[loop.index - 1] else 'Camera is off'}}" />
+          </div>
+          <div class="button-container">
+            <form method="post" action="/camera" >
+              <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
+              <button type="submit" class="camera-switch-button">{{ "Turn Off" if showCameras[loop.index - 1] else "Turn On" }}</button>
+            </form>
+            <form method="post" action="/reboot">
+              <input type="hidden" name="camera" value="{{ loop.index - 1 }}" />
+              <button type="submit" class="camera-switch-button">Reboot</button>
+            </form>
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </body>
 </html>
