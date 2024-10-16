@@ -1,5 +1,8 @@
 # CS437_Final_Project
 
+<img width="579" alt="Screenshot 2024-08-29 at 13 40 58" src="https://github.com/user-attachments/assets/3d3d8b6d-4822-423e-af88-fd3465f4989c">
+
+
 Uses Flask to set up a webserver and streams raspberry pi camera feed on to `/feed`
 
 Use `ifconfig`'s wlan0 (or equivalent) inet address to access the feed on a different device on the same network.
